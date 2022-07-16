@@ -7,7 +7,7 @@
 컴퓨터공학과 이가영
 컴퓨터공학과 최경서
 
-#개발환경 및 오픈소스
+# 개발환경 및 오픈소스
 Tensorflow Posenet, Pose estimation
 React-Native
 Android
