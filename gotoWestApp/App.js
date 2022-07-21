@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Platform } from 'react-native';
+import { useState, useEffect, createRef } from 'react';
 import { Camera } from 'expo-camera';
 import { cameraWithTensors } from '@tensorflow/tfjs-react-native/dist/camera/camera_stream';
 import * as tf from '@tensorflow/tfjs';
@@ -9,6 +9,8 @@ import '@tensorflow/tfjs-react-native';
 export default function App() {
   const [isTfReady,setIsTfReady] = useState(false);
   const [hasPermission,setHasPermission] = useState(null);
+  const TensorCamera = cameraWithTensors(Camera); //expo-camera를 통한 TensorCamera 구성 
+  const tensorCameraRef = createRef(); //Tensor 카메라의 element 정보 추출 
   useEffect(() => {
     (async () => {
       await checkPermission();
@@ -35,6 +37,11 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Hello gotoWest!</Text>
+      <TensorCamera
+        ref={tensorCameraRef} 
+        style={styles.camera}
+        type={Camera.Constants.Type.front}  
+      />
       <StatusBar style="auto" />
     </View>
   );
@@ -47,4 +54,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  camera: {
+    position: "absolute",
+    width: 800,
+    height: 600,
+  }
 });
